@@ -15,17 +15,19 @@ public class PayrollService implements IPayrollService {
 
     public PayrollDTO getPayrollInfoByEmployeeId(Integer employeeId) throws PayrollInfoException {
         Payroll payroll = payrollRepository.findByEmployeeId(employeeId);
-        if(payroll == null){
-            throw new PayrollInfoException("Payroll Information not found for the employee ID: "+employeeId);
+        if (payroll == null) {
+            throw new PayrollInfoException("Payroll Information not found for the employee ID: " + employeeId);
         }
         return PayrollDTO.convertToDTO(payroll);
     }
 
-    public void updatePayrollInfo(Integer employeeId){
-
+    public void updatePayrollInfo(Integer employeeId, Double updatedCTC) throws PayrollInfoException {
+        PayrollDTO payrollDTO = getPayrollInfoByEmployeeId(employeeId);
+        payrollDTO.setMonthlySalary(updatedCTC / 12.0d);
+        payrollRepository.save(Payroll.convertToEntity(payrollDTO));
     }
 
-    public void createPayrollInfo(PayrollDTO payrollDTO){
+    public void createPayrollInfo(PayrollDTO payrollDTO) {
         payrollRepository.save(Payroll.convertToEntity(payrollDTO));
     }
 }

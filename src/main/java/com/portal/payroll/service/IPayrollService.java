@@ -7,7 +7,7 @@ public interface IPayrollService {
 
     PayrollDTO getPayrollInfoByEmployeeId(Integer employeeId) throws PayrollInfoException;
 
-    void updatePayrollInfo(Integer employeeId);
+    void updatePayrollInfo(Integer employeeId, Double updatedCTC) throws PayrollInfoException;
 
     void createPayrollInfo(PayrollDTO payrollDTO);
 
